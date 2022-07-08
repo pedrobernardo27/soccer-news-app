@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/default_hall_margin">
+    android:layout_margin="@dimen/default_hall_margin"
+    app:cardBackgroundColor="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,8 +13,8 @@
 
         <ImageView
             android:id="@+id/ivTnubnail"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/news_image_height"
+            android:layout_width="394dp"
+            android:layout_height="250dp"
             android:contentDescription="@string/cd_news_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +31,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivTnubnail"
@@ -82,7 +83,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_margin"
-            android:background="?android:selectableItemBackgroundBorderless"
+            android:background="@color/white"
+
             android:clickable="true"
             android:contentDescription="@string/cd_share_icon"
             android:focusable="true"
