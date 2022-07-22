@@ -1,17 +1,15 @@
 package com.example.soccernews.ui.news;
 
-import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.room.Room;
 
-import com.example.soccernews.data.local.AppDatabase;
+import com.example.soccernews.data.SoccerNewsRepository;
 import com.example.soccernews.data.remote.SoccerNewsApi;
 import com.example.soccernews.domain.News;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,23 +26,16 @@ public class NewsViewModel extends ViewModel {
 
     private final MutableLiveData<List<News>> news = new MutableLiveData<>();
     private final MutableLiveData<State> state = new MutableLiveData<>();
-    private final SoccerNewsApi api;
 
     public NewsViewModel() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pedrobernardo27.github.io/soccer-news-api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        api = retrofit.create(SoccerNewsApi.class);
 
         this.findNews();
 
     }
 
-    private void findNews() {
+    public void findNews() {
         state.setValue(State.DOING);
-        api.getNews().enqueue(new Callback<List<News>>() {
+        SoccerNewsRepository.getInstance().getRemoteApi().getNews().enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, Response<List<News>> response) {
                 if (response.isSuccessful()) {
@@ -60,6 +51,10 @@ public class NewsViewModel extends ViewModel {
                 state.setValue(State.ERROR);
             }
         });
+    }
+    public void saveNews(News news){
+        AsyncTask.execute(() -> SoccerNewsRepository.getInstance().getLocalDb().newsDao().save(news));
+
     }
 
     public LiveData<List<News>> getNews() { return this.news;}
